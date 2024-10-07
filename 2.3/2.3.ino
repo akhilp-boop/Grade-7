@@ -2,6 +2,9 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16x2 display
 
+// SDA is connected to A4
+// SCL is connected to A5
+
 // Custom characters
 byte Hammer[8] = {
   B00100,
