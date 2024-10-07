@@ -1,4 +1,3 @@
-#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 // Initialize the LCD with the I2C address (0x27) and specify the number of columns and rows
