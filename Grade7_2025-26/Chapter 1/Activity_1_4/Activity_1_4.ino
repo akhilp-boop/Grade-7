@@ -27,10 +27,12 @@ void loop()
   analogWrite(enable1, 191);
   // Motor 2 (right) full speed (100% duty cycle)
   analogWrite(enable2, 255);
+  
   // Set Motor 1 (left) direction to forward (clockwise)
   // input11 = HIGH, input12 = LOW
   digitalWrite(input11, HIGH);
   digitalWrite(input12, LOW);
+  
   // Set Motor 2 (right) direction to forward (clockwise)
   // input21 = HIGH, input22 = LOW
   digitalWrite(input21, HIGH);
