@@ -5,6 +5,7 @@
 #define PS2_SEL 6
 #define PS2_DAT 2
 
+
 // --- Motor control pins ---
 const int motorIn1Pin = 7; // Right motor IN1
 const int motorIn2Pin = 8; // Right motor IN2
@@ -15,7 +16,8 @@ const int motor1_REN = 5; // Right Enable (PWM)
 PS2X ps2x; // PS2 controller object
 int error = 0;
 
-void setup() 
+
+void setup()
 {
   // Setup motor control pins
   pinMode(motorIn1Pin, OUTPUT);
@@ -37,15 +39,16 @@ void setup()
   if (error == 0)
   {
   Serial.println("Controller configured successfully");
-  } 
-  else 
+  }
+  else
   {
   Serial.print("Controller configuration failed, error code: ");
   Serial.println(error);
   }
 }
 
-void loop() 
+
+void loop()
 {
   ps2x.read_gamepad(false, 0); // Read controller data
   if (error != 0) return;
@@ -59,21 +62,23 @@ void loop()
   {
   controlCar(leftX, rightY);
   }
-  else 
+  else
   {
   Brake();
   }
   delay(50); // Loop delay
 }
 
+
 // --- Validate analog input ---
-bool isValidSignal(int leftX, int rightY) 
+bool isValidSignal(int leftX, int rightY)
 {
   return (leftX >= 0 && leftX <= 255 && rightY >= 0 && rightY <= 255);
 }
 // --- Main control function ---
 
-void controlCar(int leftX, int rightY) 
+
+void controlCar(int leftX, int rightY)
 {
   int motorSpeed = map(rightY, 0, 255, 255, -255); // Up = forward
   int turnSpeed = map(leftX, 0, 255, -255, 255); // Left = left turn
@@ -82,70 +87,73 @@ void controlCar(int leftX, int rightY)
   Serial.print(" | Turn Speed: ");
   Serial.println(turnSpeed);
   // Reduced deadzone for more responsiveness
-  if (abs(motorSpeed) <= 5 && abs(turnSpeed) <= 5) 
+  if (abs(motorSpeed) <= 5 && abs(turnSpeed) <= 5)
   {
   Brake();
   return;
   }
 
+
   // Forward
-  if (motorSpeed > 5) 
+  if (motorSpeed > 5)
   {
-    if (turnSpeed > 5) 
+    if (turnSpeed > 5)
     {
       forwardRight(motorSpeed);
-      Serial.println("→ Forward Right");
-      
+      Serial.println("Forward Right");
+     
     }
-    else if (turnSpeed < -5) 
+    else if (turnSpeed < -5)
     {
       forwardLeft(motorSpeed);
-      Serial.println("→ Forward Left");
+      Serial.println("Forward Left");
       }
       else
       {
         moveForward(motorSpeed);
-        Serial.println("→ Forward");
+        Serial.println("Forward");
       }
   }
 
+
   // Backward
-  else if (motorSpeed < -5) 
+  else if (motorSpeed < -5)
   {
-    if (turnSpeed > 5) 
+    if (turnSpeed > 5)
     {
       backwardRight(abs(motorSpeed));
-      Serial.println("→ Backward Right");
+      Serial.println("Backward Right");
     }
-    else if (turnSpeed < -5) 
+    else if (turnSpeed < -5)
     {
       backwardLeft(abs(motorSpeed));
-      Serial.println("→ Backward Left");
+      Serial.println("Backward Left");
     }
     else
     {
       moveBackward(abs(motorSpeed));
-      Serial.println("→ Backward");
+      Serial.println("Backward");
     }
   }
   // In-place turn only
   else
   {
-    if (turnSpeed > 5) 
+    if (turnSpeed > 5)
     {
       turnRight(255);
-      Serial.println("→ Turn Right");
+      Serial.println("Turn Right");
     }
-    else if (turnSpeed < -5) 
+    else if (turnSpeed < -5)
     {
       turnLeft(255);
-    Serial.println("→ Turn Left");
+    Serial.println("Turn Left");
     }
   }
 }
 
+
 // --- Movement Functions ---
-void moveForward(int speed) 
+void moveForward(int speed)
 {
   digitalWrite(motorIn1Pin, LOW);
   analogWrite(motorIn2Pin, constrain(speed, 0, 255));
@@ -153,7 +161,8 @@ void moveForward(int speed)
   digitalWrite(motorIn4Pin, LOW);
 }
 
-void moveBackward(int speed) 
+
+void moveBackward(int speed)
 {
   analogWrite(motorIn1Pin, constrain(speed, 0, 255));
   digitalWrite(motorIn2Pin, LOW);
@@ -161,7 +170,8 @@ void moveBackward(int speed)
   analogWrite(motorIn4Pin, constrain(speed, 0, 255));
 }
 
-void turnRight(int speed) 
+
+void turnRight(int speed)
 {
   analogWrite(motorIn1Pin, constrain(speed, 0, 255));
   digitalWrite(motorIn2Pin, LOW);
@@ -169,7 +179,8 @@ void turnRight(int speed)
   digitalWrite(motorIn4Pin, LOW);
 }
 
-void turnLeft(int speed) 
+
+void turnLeft(int speed)
 {
   digitalWrite(motorIn1Pin, LOW);
   analogWrite(motorIn2Pin, constrain(speed, 0, 255));
@@ -177,7 +188,8 @@ void turnLeft(int speed)
   analogWrite(motorIn4Pin, constrain(speed, 0, 255));
 }
 
-void forwardRight(int speed) 
+
+void forwardRight(int speed)
 {
   analogWrite(motorIn2Pin, constrain(speed, 0, 255)); // Full speed right
   digitalWrite(motorIn1Pin, LOW);
@@ -185,7 +197,8 @@ void forwardRight(int speed)
   analogWrite(motorIn3Pin, constrain(speed, 0, 255)); // Full speed left
 }
 
-void forwardLeft(int speed) 
+
+void forwardLeft(int speed)
 {
   analogWrite(motorIn2Pin, constrain(speed, 0, 255)); // Full speed right
   digitalWrite(motorIn1Pin, LOW);
@@ -193,7 +206,8 @@ void forwardLeft(int speed)
   analogWrite(motorIn3Pin, constrain(speed, 0, 255)); // Full speed left
 }
 
-void backwardRight(int speed) 
+
+void backwardRight(int speed)
 {
   analogWrite(motorIn1Pin, constrain(speed, 0, 255)); // Full speed right
   digitalWrite(motorIn2Pin, LOW);
@@ -201,7 +215,8 @@ void backwardRight(int speed)
   analogWrite(motorIn4Pin, constrain(speed, 0, 255)); // Full speed left
 }
 
-void backwardLeft(int speed) 
+
+void backwardLeft(int speed)
 {
   analogWrite(motorIn1Pin, constrain(speed, 0, 255)); // Full speed right
   digitalWrite(motorIn2Pin, LOW);
@@ -209,7 +224,8 @@ void backwardLeft(int speed)
   analogWrite(motorIn4Pin, constrain(speed, 0, 255)); // Full speed left
 }
 
-void Brake() 
+
+void Brake()
 {
   digitalWrite(motorIn1Pin, LOW);
   digitalWrite(motorIn2Pin, LOW);
