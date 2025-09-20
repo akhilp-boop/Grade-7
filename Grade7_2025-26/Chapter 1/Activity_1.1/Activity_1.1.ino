@@ -1,57 +1,33 @@
-// Define input pins for Motor 1
-const int input11 = 7;
-const int input12 = 8;
-// Define input pins for Motor 2
-const int input21 = 9;
-const int input22 = 10;
+// Define input pins for Motor
+const int input1 = 7 ;
+const int input2 = 8 ;
+
 void setup()
 {
-  // Set pins 7, 8, 9, and 10 as output pins
-  pinMode(input11, OUTPUT);
-  pinMode(input12, OUTPUT);
-  pinMode(input21, OUTPUT);
-  pinMode(input22, OUTPUT);
+  //Set pins 7 & 8 as Output.
+  pinMode(input1,OUTPUT) ;
+  pinMode(input2,OUTPUT) ;
 }
 
 void loop()
 {
-  // —-------------- Turn LEFT —--------------
-
-  // To turn left, we make the left motor (Motor 2) rotate backward (anti- clockwise)
-
-  // and the right motor (Motor 1) rotates forward (clockwise).
-  // Motor 2 (left) anti-clockwise => input11 = LOW, input12 = HIGH
-  digitalWrite(input11, LOW);
-  digitalWrite(input12, HIGH);
-
-  // Motor 1 (right) clockwise => input21 = HIGH, input22 = LOW
-  digitalWrite(input21, HIGH);
-  digitalWrite(input22, LOW);
-  // Run both motors for 3 seconds
-  delay(3000);
-  // Stop both motors by setting all inputs LOW
-  digitalWrite(input11, LOW);
-  digitalWrite(input12, LOW);
-  digitalWrite(input21, LOW);
-  digitalWrite(input22, LOW);
-  // Wait for 2 seconds while motors are stopped
-  delay(2000);
-  // —-------------- Turn RIGHT —--------------
-  // To turn right, we make the left motor (Motor 2) rotate forward (clockwise)
-  // and the right motor (Motor 1) rotates backward (anti-clockwise).
-
-  // Motor 1 (left) clockwise => input11 = HIGH, input12 = LOW
-  digitalWrite(input11, HIGH);
-  digitalWrite(input12, LOW);
-  // Motor 2 (right) anti-clockwise => input21 = LOW, input22 = HIGH
-  digitalWrite(input21, LOW);
-  digitalWrite(input22, HIGH);
-  // Run both motors for 3 seconds
-  delay(3000);
-  // Stop both motors by setting all inputs LOW
-  digitalWrite(input11, LOW);
-  digitalWrite(input12, LOW);
-  digitalWrite(input21, LOW);
-  digitalWrite(input22, LOW);
-  delay(3000);
+  //Making Clockwise motion , set input1 = High , input2 = Low
+  digitalWrite(input1,HIGH) ;
+  digitalWrite(input2,LOW) ;
+  //Clockwise for 3 secs
+  delay(3000) ;
+  //To STOP, set input1= LOW, input2= LOW
+  digitalWrite(input1,LOW) ;
+  digitalWrite(input2,LOW) ;
+  delay(1000) ;
+  //Making Anti - Clockwise motion, set input1 = LOW , input2 = HIGH
+  digitalWrite(input1,LOW) ;
+  digitalWrite(input2,HIGH) ;
+  //Anti - Clockwise for 3 secs
+  delay(3000) ;
+  //To STOP, set input1= LOW, input2= LOW
+  digitalWrite(input1,LOW) ;
+  digitalWrite(input2,LOW) ;
+  delay(1000) ;
 }
+
