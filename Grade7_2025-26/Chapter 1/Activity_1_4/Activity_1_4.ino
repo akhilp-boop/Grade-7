@@ -25,12 +25,17 @@ void loop()
   // Set motor speeds using PWM
   // Motor 1 (left) 75% speed (approx 75% duty cycle)
   analogWrite(enable1, 191);
-  // Motor 2 (right) full speed (175% duty cycle)
+
+  // Motor 2 (right) full speed (75% duty cycle)
   analogWrite(enable2, 191);
+
+  
+
   // Set Motor 1 (left) direction to forward (clockwise)
   // input11 = HIGH, input12 = LOW
   digitalWrite(input11, HIGH);
   digitalWrite(input12, LOW);
+  
   // Set Motor 2 (right) direction to forward (clockwise)
   // input21 = HIGH, input22 = LOW
   digitalWrite(input21, HIGH);
@@ -43,5 +48,7 @@ void loop()
   digitalWrite(input12, LOW);
   digitalWrite(input21, LOW);
   digitalWrite(input22, LOW);
+
+  delay(3000);
 }
 
